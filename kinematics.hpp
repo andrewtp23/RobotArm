@@ -519,10 +519,12 @@ void inverseKinematics(float x_pos, float y_pos, float z_pos,
   float rotation[3][3] = {};
   multiply3x3(rpy, fk_base, rotation);
   
+  
 
   // multiply inverse with rotation calculated
   float base[3][3] = {};
-  multiply3x3(rotation, inv, base);
+  
+  multiply3x3(inv, rotation, base);
   
   // Calculate joint angles
 
@@ -601,9 +603,7 @@ void inverseKinematics(float x_pos, float y_pos, float z_pos,
     j5angle = j5p;
   else
     j5angle = j5n;
-  
-  std::cout << "j5p:" <<j5p <<std::endl;
-  std::cout <<"j5n" << j5n <<std::endl;
+
   
   float j4p = convToDegrees(atan2(base[1][2], base[0][2]));
   float j4n = convToDegrees(atan2((-1 * base[1][2]), (-1* base[0][2])));
@@ -614,8 +614,7 @@ void inverseKinematics(float x_pos, float y_pos, float z_pos,
   else
     j4angle = j4n;
     
-  std::cout << j4p << std::endl;
-  std::cout << j4n <<std::endl;
+    
   float j6p = 0;
   if(base[2][1] < 0)
     j6p = convToDegrees(atan2(base[2][1],(-1 * base[2][0]))) + 180;
@@ -632,8 +631,6 @@ void inverseKinematics(float x_pos, float y_pos, float z_pos,
   else
     j6angle = j6p;
     
-  std::cout << "j6p:"<<j6p <<std::endl;
-  std::cout << "j6n:" << j6n <<std::endl;
     
   // Place angles in array.
   angle_array[0] = j1angle;
